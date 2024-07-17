@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tour form</title>
+</head>
+<body>
+    {% if form %}
+    <form action="" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Submit</button>
+    </form>
+    {% elif data %}
+    <h1>Thank you for submitting the form</h1>
+    <p>Here is the data we receved:</p>
+    <ul>
+        <li>Tour name: {{ tour }}</li>
+        <li>your name: {{ Name }}</li>
+        <li>your phone: {{ phone }}</li>
+        <li>your address : {{ address }}</li>
+        <li>opt for insurance: {{ insurance }}</li>
+    </ul>
+    <h1>the detailes of the tour are </h1>
+    <ul>
+        <li>name: {{ Tour.name }}</li>
+        <li>description: {{ Tour.description }}</li>
+        <li>place: {{ Tour.place }}</li>
+        <li>price: {{ Tour.price }}</li>
+        <li>duration: {{ Tour.duration }}</li>
+        <li>last updated: {{ Tour.updated_at }}</li>
+    </ul>
+    <h1>The detailes of the agency is </h1>
+    <ul>
+        <li>name: {{ Agency.name }}</li>
+        <li>address: {{ Agency.address }}</li>
+        <li>phone: {{ Agency.representative }}</li>
+        <li>email: {{ Agency.contact }}</li>
+    {% else %}
+    <h1>{{message}}</h1>
+    {% endif %}
+</body>
+</html>

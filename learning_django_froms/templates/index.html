@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LetsGoToursAndTravels</title>
+</head>
+<body>
+    <h1>Welcome to LetsGoToursAndTravels</h1>
+    <p><h3>The avilable tours are: </h3></p>
+    <ol>
+        
+        {% for tour in tours_avilable %}
+        <li>
+            <ul>
+                <h2>{{tour.name}}</h2>
+                <li>
+                    {{tour.description}}
+                </li>
+                <li>
+                    {{tour.place}}
+                </li>
+                <li>
+                    price- ₹{{tour.price}}
+                </li>
+                <li>
+                    duration in days: {{tour.duration}}
+                </li>
+                <li>
+                    last updated: {{tour.updated_at}}
+                </li>
+                
+        </ul>
+        </li>
+        {% endfor %}
+    </ol>
+</body>
+</html>
