@@ -16,10 +16,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from LetsgoToursAndTravels.views import index, tour_form
+from LetsgoToursAndTravels.views import index, tour_form, add_tour, add_agency, add_place
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', index,name='index'),
     path('form', tour_form,name='tour_form'),
+    path('add_place', add_place,name='add_place'),
+    path('add_agency', add_agency,name='add_agency'),
+    path('add_tour', add_tour,name='add_tour'),
 ]

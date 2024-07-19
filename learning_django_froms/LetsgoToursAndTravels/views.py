@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from .models import Tour,agencies,places
-from .forms import TourForm
+from .forms import TourForm,addTourForm,addAgenciesForm,addPlacesForm
 # Create your views here.
 def index(request):
     Tours_avilable=Tour.objects.all()
@@ -24,3 +24,37 @@ def tour_form(request):
     else:
         tf=TourForm()
         return render (request,"tour_form.html",context={'form':tf})
+def add_tour(request):
+    if request.method=='POST':
+        tf=addTourForm(request.POST)
+        if tf.is_valid():
+            tf.save()
+            return render(request,'add_tour.html',context={'message':"Tour added successfully!"})
+        else:
+            return render(request,'add_tour.html',context={'message':"error adding tour!"})
+    else:
+        tf=addTourForm()
+        return render(request,'add_tour.html',context={'form':tf})
+def add_agency(request):    
+    if request.method=='POST':
+        tf=addAgenciesForm(request.POST)
+        if tf.is_valid():
+            tf.save()
+            return render(request,'add_agency.html',context={'message':"Agency added successfully!"})
+        else:
+            return render(request,'add_agency.html',context={'message':"error adding agency!"})
+    else:
+        tf=addAgenciesForm()
+        return render(request,'add_agency.html',context={'form':tf})
+def add_place(request):
+    if request.method=='POST':
+        tf=addPlacesForm(request.POST)
+        if tf.is_valid():
+            tf.save()
+            return render(request,'add_place.html',context={'message':"Place added successfully!"})
+        else:
+            return render(request,'add_place.html',context={'message':"error adding place!"})
+    else:
+        tf=addPlacesForm()
+        return render(request,'add_place.html',context={'form':tf})
+    
