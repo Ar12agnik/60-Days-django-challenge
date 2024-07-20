@@ -23,3 +23,7 @@ class places(models.Model):
     description=models.TextField(verbose_name = "Description")
     def __str__(self):
         return self.name
+class pictures(models.Model):
+    tour=models.ForeignKey(Tour,on_delete=models.CASCADE,verbose_name = "Tour_Name")
+    place=models.ForeignKey(places,on_delete=models.CASCADE,verbose_name = "Place")
+    image=models.ImageField(upload_to='images_tour/',verbose_name = "Image")

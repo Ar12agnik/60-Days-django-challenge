@@ -16,7 +16,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from LetsgoToursAndTravels.views import index, tour_form, add_tour, add_agency, add_place
+from LetsgoToursAndTravels.views import index, tour_form, add_tour, add_agency, add_place, upload_picture,view_picture
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -25,4 +27,10 @@ urlpatterns = [
     path('add_place', add_place,name='add_place'),
     path('add_agency', add_agency,name='add_agency'),
     path('add_tour', add_tour,name='add_tour'),
+    path('upload_picture', upload_picture,name='upload_picture'),
+    path('view_picture', view_picture,name='view_picture'),
 ]
+if settings.DEBUG:
+
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

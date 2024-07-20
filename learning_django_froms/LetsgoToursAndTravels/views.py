@@ -1,6 +1,6 @@
 from django.shortcuts import render
-from .models import Tour,agencies,places
-from .forms import TourForm,addTourForm,addAgenciesForm,addPlacesForm
+from .models import Tour,agencies,places,pictures
+from .forms import TourForm,addTourForm,addAgenciesForm,addPlacesForm,pictures_upload_form
 # Create your views here.
 def index(request):
     Tours_avilable=Tour.objects.all()
@@ -57,4 +57,17 @@ def add_place(request):
     else:
         tf=addPlacesForm()
         return render(request,'add_place.html',context={'form':tf})
-    
+def upload_picture(request):
+    if request.method=="POST":
+        form=pictures_upload_form(request.POST,request.FILES)
+        if form.is_valid():
+            form.save()
+            return render(request,'upload_picture.html',context={'message':"Picture uploaded successfully!"})  
+        else:
+            return render(request,'upload_picture.html',context={'message':"error uploading picture!",'form':form})
+    else:
+        form=pictures_upload_form()
+        return render(request,'upload_picture.html',context={'form':form})
+def view_picture(request):
+    pics=pictures.objects.all()
+    return render(request,'viewpicture.html',context={'pics':pics})
