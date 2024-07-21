@@ -24,10 +24,10 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', index,name='index'),
     path('form', tour_form.as_view(),name='tour_form'),
-    path('add_place', add_place,name='add_place'),
-    path('add_agency', add_agency,name='add_agency'),
+    path('add_place', add_place.as_view(),name='add_place'),
+    path('add_agency', add_agency.as_view(),name='add_agency'),
     path('add_tour', add_tour.as_view(),name='add_tour'),
-    path('upload_picture', upload_picture,name='upload_picture'),
+    path('upload_picture', upload_picture.as_view(),name='upload_picture'),
     path('view_picture', view_picture,name='view_picture'),
 ]
 if settings.DEBUG:

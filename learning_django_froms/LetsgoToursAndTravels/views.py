@@ -67,39 +67,72 @@ class add_tour(View):
             return render(request,'add_tour.html',context={'message':"error adding tour!"})
 
         
-def add_agency(request):    
-    if request.method=='POST':
+# def add_agency(request):    
+#     if request.method=='POST':
+#         tf=addAgenciesForm(request.POST)
+#         if tf.is_valid():
+#             tf.save()
+#             return render(request,'add_agency.html',context={'message':"Agency added successfully!"})
+#         else:
+#             return render(request,'add_agency.html',context={'message':"error adding agency!"})
+#     else:
+#         tf=addAgenciesForm()
+#         return render(request,'add_agency.html',context={'form':tf})
+class add_agency(View):
+    def get(self,request):
+        tf=addAgenciesForm()
+        return render(request,'add_agency.html',context={'form':tf})
+    def post(self,request):
         tf=addAgenciesForm(request.POST)
         if tf.is_valid():
             tf.save()
             return render(request,'add_agency.html',context={'message':"Agency added successfully!"})
         else:
             return render(request,'add_agency.html',context={'message':"error adding agency!"})
-    else:
-        tf=addAgenciesForm()
-        return render(request,'add_agency.html',context={'form':tf})
-def add_place(request):
-    if request.method=='POST':
+# def add_place(request):
+#     if request.method=='POST':
+#         tf=addPlacesForm(request.POST)
+#         if tf.is_valid():
+#             tf.save()
+#             return render(request,'add_place.html',context={'message':"Place added successfully!"})
+#         else:
+#             return render(request,'add_place.html',context={'message':"error adding place!"})
+#     else:
+#         tf=addPlacesForm()
+#         return render(request,'add_place.html',context={'form':tf})
+class add_place(View):
+    def get(self,request):
+        tf=addPlacesForm()
+        return render(request,'add_place.html',context={'form':tf})
+    def post(self,request):
         tf=addPlacesForm(request.POST)
         if tf.is_valid():
             tf.save()
             return render(request,'add_place.html',context={'message':"Place added successfully!"})
         else:
             return render(request,'add_place.html',context={'message':"error adding place!"})
-    else:
-        tf=addPlacesForm()
-        return render(request,'add_place.html',context={'form':tf})
-def upload_picture(request):
-    if request.method=="POST":
+# def upload_picture(request):
+#     if request.method=="POST":
+#         form=pictures_upload_form(request.POST,request.FILES)
+#         if form.is_valid():
+#             form.save()
+#             return render(request,'upload_picture.html',context={'message':"Picture uploaded successfully!"})  
+#         else:
+#             return render(request,'upload_picture.html',context={'message':"error uploading picture!",'form':form})
+#     else:
+#         form=pictures_upload_form()
+#         return render(request,'upload_picture.html',context={'form':form})
+class upload_picture(View):
+    def get(self,request):
+        form=pictures_upload_form()
+        return render(request,'upload_picture.html',context={'form':form})
+    def post(self,request):
         form=pictures_upload_form(request.POST,request.FILES)
         if form.is_valid():
             form.save()
             return render(request,'upload_picture.html',context={'message':"Picture uploaded successfully!"})  
         else:
             return render(request,'upload_picture.html',context={'message':"error uploading picture!",'form':form})
-    else:
-        form=pictures_upload_form()
-        return render(request,'upload_picture.html',context={'form':form})
 def view_picture(request):
     pics=pictures.objects.all()
     return render(request,'viewpicture.html',context={'pics':pics})
