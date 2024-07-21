@@ -8,6 +8,8 @@ class TourForm(forms.Form):
         for visible in self.visible_fields():
             if visible.name!='insurance':
                 visible.field.widget.attrs['class'] = 'form-control'
+        self.helper = FormHelper(self)
+        self.helper.add_input(Submit('submit', 'Submit'))
             
     Tour=forms.ModelChoiceField(queryset=Tour.objects.all(),required=True,label='Tour')
     Name=forms.CharField(max_length=100,required=True,label='Name')
@@ -15,16 +17,28 @@ class TourForm(forms.Form):
     address=forms.CharField(required=True,label='Address')
     insurance=forms.BooleanField(required=False,label='Travel Insurance',widget=forms.CheckboxInput(attrs={'class':'form-check-input'}))
 class addTourForm(forms.ModelForm):
+    insurance = forms.BooleanField(required=False, label='Travel Insurance')
+
     class Meta:
-        model=Tour
-        fields='__all__'
-    insurance=forms.BooleanField(required=False,label='Travel Insurance')
+        model = Tour
+        fields = '__all__'
+
+    def __init__(self, *args, **kwargs):
+        super(addTourForm, self).__init__(*args, **kwargs) 
+        self.helper = FormHelper(self)
+        self.helper.add_input(Submit('submit', 'Submit'))
 class addAgenciesForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        self.helper = FormHelper(self)
+        self.helper.add_input(Submit('submit', 'Submit'))
     class Meta:
         model=agencies
         fields='__all__'
     insurance=forms.BooleanField(required=False,label='Travel Insurance')
 class addPlacesForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        self.helper = FormHelper(self)
+        self.helper.add_input(Submit('submit', 'Submit'))
     class Meta:
         model=places
         fields='__all__'

@@ -17,7 +17,7 @@
             <form method="post">
                 {% csrf_token %}
                 {%crispy form %}
-                <button type="submit" class="btn btn-primary">Submit</button>
+                {% comment %} <button type="submit" class="btn btn-primary">Submit</button> {% endcomment %}
 
 
         {% elif data %}
