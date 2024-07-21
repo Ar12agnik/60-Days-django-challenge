@@ -25,24 +25,44 @@ def index(request):
 #     else:
 #         tf=TourForm()
 #         return render (request,"tour_form.html",context={'form':tf})
+# class tour_form(View):
+#     def get(self,request):
+#         tf=TourForm()
+#         return render (request,"tour_form.html",context={'form':tf})
+#     def post(self,request):
+#         tf=TourForm(request.POST)
+#         print(tf.is_valid())
+#         if tf.is_valid():
+#             print("valid")
+#             tour=tf.cleaned_data['Tour']
+#             Name=tf.cleaned_data['Name']
+#             phone=tf.cleaned_data['phone']
+#             address=tf.cleaned_data['address']
+#             insurance=tf.cleaned_data['insurance']
+#             tour=Tour.objects.get(name=tour)
+#             agency=agencies.objects.get(Tours_available=tour.id)
+#             return render(request,'tour_form.html',context={'tour':tour,'Name':Name,'phone':phone,'address':address,'insurance':insurance,'Tour':tour,"Agency":agency,'data':True})
 class tour_form(View):
+    form_class=TourForm
+    inicial={"Name":"your name","phone":1234567890,"address":"Kerala","insurance":False}
+    template_name='tour_form.html'
     def get(self,request):
-        tf=TourForm()
-        return render (request,"tour_form.html",context={'form':tf})
+        form=self.form_class(initial=self.inicial)
+        return render(request,self.template_name,{'form':form})
     def post(self,request):
-        tf=TourForm(request.POST)
-        print(tf.is_valid())
-        if tf.is_valid():
-            print("valid")
-            tour=tf.cleaned_data['Tour']
-            Name=tf.cleaned_data['Name']
-            phone=tf.cleaned_data['phone']
-            address=tf.cleaned_data['address']
-            insurance=tf.cleaned_data['insurance']
+        form=self.form_class(request.POST)
+        if form.is_valid():
+            tour=form.cleaned_data['Tour']
+            Name=form.cleaned_data['Name']
+            phone=form.cleaned_data['phone']
+            address=form.cleaned_data['address']
+            insurance=form.cleaned_data['insurance']
             tour=Tour.objects.get(name=tour)
             agency=agencies.objects.get(Tours_available=tour.id)
-            return render(request,'tour_form.html',context={'tour':tour,'Name':Name,'phone':phone,'address':address,'insurance':insurance,'Tour':tour,"Agency":agency,'data':True})
-        
+            return render(request,self.template_name,context={'tour':tour,'Name':Name,'phone':phone,'address':address,'insurance':insurance,'Tour':tour,"Agency":agency,'data':True})
+        else:
+            return render(request,self.template_name,context={'message':"error processing data!"})
+    
 # def add_tour(request):
 #     if request.method=='POST':
 #         tf=addTourForm(request.POST)
