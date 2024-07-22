@@ -1,11 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LetsGoToursAndTravels</title>
-</head>
-<body>
+{% extends "base.html" %}
+    {% block title %}
+    LetsGoToursAndTravels
+    {% endblock title %} 
+
+{% block content %}
+
+
     <h1>Welcome to LetsGoToursAndTravels</h1>
     <p><h3>The avilable tours are </h3></p>
     <ol>
@@ -35,5 +35,4 @@
         {% endfor %}
     </ol>
     <a href="{% url 'view_picture' %}">view Pictures</a>
-</body>
-</html>
+{% endblock %}
