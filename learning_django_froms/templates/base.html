@@ -9,6 +9,7 @@
   </head>
   <body>
     {% load static %}
+    {% load tour_extras %}
     <nav class="navbar navbar-expand-lg bg-body-tertiary ">
       <div class="container-fluid">
         <a class="navbar-brand" href="#">
@@ -25,6 +26,7 @@
             <a class="nav-link" href="#">Features</a>
             <a class="nav-link" href="#">Pricing</a>
             <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+            <div>total no of tours: {% total_tours %}</div>
           </div>
         </div>
       </div>
@@ -33,6 +35,7 @@
     {% block content %}
     
     {% endblock content %}
+    {%show_pictures%}
     <footer class="footer">
       <div class="container">
         <p>&copy; 2022 Your Website. All rights reserved.</p>

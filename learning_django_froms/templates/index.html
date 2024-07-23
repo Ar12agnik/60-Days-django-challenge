@@ -4,35 +4,18 @@
     {% endblock title %} 
 
 {% block content %}
+{% load tour_extras %}
 
-
-    <h1>Welcome to LetsGoToursAndTravels</h1>
-    <p><h3>The avilable tours are </h3></p>
-    <ol>
-        
-        {% for tour in tours_avilable %}
-        <li>
-            <ul>
-                <h2>{{tour.name}}</h2>
-                <li>
-                    {{tour.description}}
-                </li>
-                <li>
-                    {{tour.place}}
-                </li>
-                <li>
-                    price- ₹{{tour.price}}
-                </li>
-                <li>
-                    duration in days: {{tour.duration}}
-                </li>
-                <li>
-                    last updated: {{tour.updated_at}}
-                </li>
-                
-        </ul>
-        </li>
-        {% endfor %}
-    </ol>
-    <a href="{% url 'view_picture' %}">view Pictures</a>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <h1>Welcome to LetsGoToursAndTravels</h1>
+                <p><h3>The available tours are:</h3></p>
+                <ol>
+                    {% show_latest_tours %}
+                </ol>
+                <a href="{% url 'view_picture' %}" class="btn btn-primary">View All Pictures</a>
+            </div>
+        </div>
+    </div>
 {% endblock %}

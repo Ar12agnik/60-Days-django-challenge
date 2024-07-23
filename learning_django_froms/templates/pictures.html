@@ -1,0 +1,15 @@
+{% if pictures %}
+{% for image in pictures %}
+        <div class="col-md-3 mb-4">
+          <div class="card h-100" style="width: 18rem;">
+            <img src="{{ image.image.url }}" class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title">{{ image.tour }}</h5>
+              <p class="card-text">{{ image.tour.description }}</p>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+{% else %}
+{{tour.description}}
+{% endif %}

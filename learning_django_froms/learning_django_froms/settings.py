@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'LetsgoToursAndTravels',
     'crispy_forms',
     'crispy_bootstrap4',
+    
 ]
 
 MIDDLEWARE = [
