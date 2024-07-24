@@ -29,6 +29,7 @@ def index(request):
         Tours_avilable=Tours_avilable.page(page)
     
     return render(request,'index.html',context={'tours_avilable':Tours_avilable,"page":int(page)})
+#** class based view
 # def tour_form(request):
 #     if request.method=='POST':
 #         tf=TourForm(request.POST)
