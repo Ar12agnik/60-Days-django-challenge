@@ -7,14 +7,28 @@ from django.core.paginator import Paginator
 def index(request):
     
     page=request.GET.get('page',1)
-    if int(page)<1:
-        page=1
+    prev=request.GET.get('prev',False)
+    next=request.GET.get('next',False)
     Tours_avilable=Tour.objects.all()
     Tours_avilable=Paginator(Tours_avilable, 1)
     total_no_of_pages=Tours_avilable.num_pages
-    Tours_avilable=Tours_avilable.page(page)
+    if not prev and not next:
+        if int(page)<1:
+            page=1
+
+        Tours_avilable=Tours_avilable.page(page)
+    elif prev=='true':
+        page=int(page)-1
+        if page<1:
+            page=1
+        Tours_avilable=Tours_avilable.page(page)
+    elif next=='true':
+        page=int(page)+1
+        if page>total_no_of_pages:
+            page=total_no_of_pages
+        Tours_avilable=Tours_avilable.page(page)
     
-    return render(request,'index.html',context={'tours_avilable':Tours_avilable})
+    return render(request,'index.html',context={'tours_avilable':Tours_avilable,"page":int(page)})
 # def tour_form(request):
 #     if request.method=='POST':
 #         tf=TourForm(request.POST)

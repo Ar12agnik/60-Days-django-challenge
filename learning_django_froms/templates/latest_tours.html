@@ -1,27 +1,6 @@
-<ul>
+
     {% load tour_extras %}
     {% for tour in tours %}
-    <li>
-        <ul>
-            <h2>{{tour.name}}</h2>
+    <p>{{tour.name}}</p>
 
-            <li>
-                
-                {% show_pictures tour%}
-            </li>
-            <li>
-                {{tour.place}}
-            </li>
-            <li>
-                price- ₹{{tour.price}}
-            </li>
-            <li>
-                duration in days: {{tour.duration}}
-            </li>
-            <li>
-                last updated: {{tour.updated_at}}
-            </li>
-            
-    </ul>
-    </li>
     {% endfor %}

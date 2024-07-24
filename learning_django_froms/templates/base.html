@@ -10,6 +10,7 @@
   <body>
     {% load static %}
     {% load tour_extras %}
+
     <nav class="navbar navbar-expand-lg bg-body-tertiary ">
       <div class="container-fluid">
         <a class="navbar-brand" href="#">
@@ -35,7 +36,11 @@
     {% block content %}
     
     {% endblock content %}
-    {%show_pictures%}
+    
+    <ol>
+      <p>Latest tours:</p>
+    {% show_latest_tours %}</li>
+    </ol>
     <footer class="footer">
       <div class="container">
         <p>&copy; 2022 Your Website. All rights reserved.</p>
