@@ -2,9 +2,18 @@ from django.shortcuts import render
 from .models import Tour,agencies,places,pictures
 from .forms import TourForm,addTourForm,addAgenciesForm,addPlacesForm,pictures_upload_form
 from django.views.generic import View
+from django.core.paginator import Paginator
 # Create your views here.
 def index(request):
+    
+    page=request.GET.get('page',1)
+    if int(page)<1:
+        page=1
     Tours_avilable=Tour.objects.all()
+    Tours_avilable=Paginator(Tours_avilable, 1)
+    total_no_of_pages=Tours_avilable.num_pages
+    Tours_avilable=Tours_avilable.page(page)
+    
     return render(request,'index.html',context={'tours_avilable':Tours_avilable})
 # def tour_form(request):
 #     if request.method=='POST':

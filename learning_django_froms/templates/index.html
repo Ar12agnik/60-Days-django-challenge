@@ -12,8 +12,54 @@
                 <h1>Welcome to LetsGoToursAndTravels</h1>
                 <p><h3>The available tours are:</h3></p>
                 <ol>
-                    {% show_latest_tours %}
+                    <ul>
+                        {% load tour_extras %}
+                        {% for tour in tours_avilable %}
+                        
+                        
+                        
+                        <li>
+                            <ul>
+                                <h2>{{tour.name}}</h2>
+                    
+                                <li>
+                                    
+                                    {% show_pictures tour%}
+                                </li>
+                                <li>
+                                    {{tour.place}}
+                                </li>
+                                <li>
+                                    price- ₹{{tour.price}}
+                                </li>
+                                <li>
+                                    duration in days: {{tour.duration}}
+                                </li>
+                                <li>
+                                    last updated: {{tour.updated_at}}
+                                </li>
+                                
+                        </ul>
+                        </li>
+                        {% endfor %}
+                        
                 </ol>
+                <ul class="pagination">
+                    <li class="page-item">
+                      <a class="page-link" href="#" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                      </a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                      <a class="page-link" href="#" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                      </a>
+                    </li>
+                  </ul>
+                
                 <a href="{% url 'view_picture' %}" class="btn btn-primary">View All Pictures</a>
             </div>
         </div>
