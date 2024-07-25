@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 class Tour(models.Model):
     name = models.CharField(max_length=100,verbose_name="Tour Name")
     place=models.ForeignKey('places',on_delete=models.CASCADE,verbose_name="Place")
@@ -29,3 +30,10 @@ class pictures(models.Model):
     image=models.ImageField(upload_to='images_tour/',verbose_name = "Image")
     def __str__(self):
         return self.tour.name
+class bookings(models.Model):
+    Tour=models.ForeignKey(Tour,on_delete=models.CASCADE,verbose_name="Tour")
+    User=models.ForeignKey(User,on_delete=models.CASCADE,verbose_name="User")
+    phone=models.CharField(max_length=100,verbose_name="Phone")
+    address=models.CharField(max_length=1000,verbose_name="Address")
+    insurance=models.BooleanField(verbose_name="Travel Insurance")
+    

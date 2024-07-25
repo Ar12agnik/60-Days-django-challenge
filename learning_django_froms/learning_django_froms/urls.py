@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from LetsgoToursAndTravels.views import index, tour_form, add_tour, add_agency, add_place, upload_picture,view_picture
+from LetsgoToursAndTravels.views import index, tour_form, add_tour, add_agency, add_place, upload_picture,view_picture,login_user,signup,logout_user
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -29,6 +29,9 @@ urlpatterns = [
     path('add_tour', add_tour.as_view(),name='add_tour'),
     path('upload_picture', upload_picture.as_view(),name='upload_picture'),
     path('view_picture', view_picture,name='view_picture'),
+    path('signup', signup.as_view(),name='signup'),
+    path('login', login_user.as_view(),name='login'),
+    path('logout', logout_user,name='logout_user'),
 ]
 if settings.DEBUG:
 

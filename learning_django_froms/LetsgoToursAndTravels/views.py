@@ -1,9 +1,14 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from .models import Tour,agencies,places,pictures
-from .forms import TourForm,addTourForm,addAgenciesForm,addPlacesForm,pictures_upload_form
+from .forms import TourForm,addTourForm,addAgenciesForm,addPlacesForm,pictures_upload_form,loginForm,signupForm
 from django.views.generic import View
 from django.core.paginator import Paginator
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import authenticate,login,logout
+from django.contrib.auth.models import User
+from django.contrib.auth.mixins import LoginRequiredMixin
 # Create your views here.
+
 def index(request):
     
     page=request.GET.get('page',1)
@@ -66,26 +71,65 @@ def index(request):
 #             tour=Tour.objects.get(name=tour)
 #             agency=agencies.objects.get(Tours_available=tour.id)
 #             return render(request,'tour_form.html',context={'tour':tour,'Name':Name,'phone':phone,'address':address,'insurance':insurance,'Tour':tour,"Agency":agency,'data':True})
-class tour_form(View):
+class tour_form(LoginRequiredMixin,View):
     form_class=TourForm
-    inicial={"Name":"your name","phone":1234567890,"address":"Kerala","insurance":False}
+    login_url='login'
     template_name='tour_form.html'
     def get(self,request):
+        self.inicial={"User":request.user}
         form=self.form_class(initial=self.inicial)
         return render(request,self.template_name,{'form':form})
     def post(self,request):
         form=self.form_class(request.POST)
         if form.is_valid():
             tour=form.cleaned_data['Tour']
-            Name=form.cleaned_data['Name']
+            Name=form.cleaned_data['User']
             phone=form.cleaned_data['phone']
             address=form.cleaned_data['address']
             insurance=form.cleaned_data['insurance']
             tour=Tour.objects.get(name=tour)
             agency=agencies.objects.get(Tours_available=tour.id)
+            form.save()
             return render(request,self.template_name,context={'tour':tour,'Name':Name,'phone':phone,'address':address,'insurance':insurance,'Tour':tour,"Agency":agency,'data':True})
         else:
             return render(request,self.template_name,context={'message':"error processing data!"})
+class login_user(View):
+    def get(self,request):
+        login_Form=loginForm()
+        return render(request,'login.html',context={'form':login_Form})
+    def post(self,request):
+        login_Form=loginForm(request.POST)
+        if login_Form.is_valid():
+            username=login_Form.cleaned_data['username']
+            password=login_Form.cleaned_data['password']
+            user=authenticate(request,username=username,password=password)
+            if user is not None:
+                login(request,user)
+                return redirect('index')
+            else:
+                return render(request,'login.html',context={'message':"Login failed!"})
+        else:
+            return render(request,'login.html',context={'message':"Login failed!"})
+class signup(View):
+    def get(self,request):
+        signup_Form=signupForm()
+        return render(request,'register.html',context={'form':signup_Form})
+    def post(self,request):
+        signup_Form=signupForm(request.POST)
+        if signup_Form.is_valid():
+            username=signup_Form.cleaned_data['username']
+            password=signup_Form.cleaned_data['password']
+            email=signup_Form.cleaned_data['email']
+            first_name=signup_Form.cleaned_data['first_name']
+            user=User.objects.create_user(username=username,password=password,email=email,first_name=first_name)
+            user.save()
+            return redirect('login')
+        else:
+            return render(request,'register.html',context={'message':"Signup failed!",'form':signup_Form})
+def logout_user(request):
+    logout(request)
+    return redirect('index')
+        
     
 # def add_tour(request):
 #     if request.method=='POST':
