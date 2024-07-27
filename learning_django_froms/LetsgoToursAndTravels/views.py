@@ -107,7 +107,7 @@ class login_user(View):
                 login(request,user)
                 return redirect('index')
             else:
-                return render(request,'login.html',context={'message':"Login failed!"})
+                return render(request,'login.html',context={'message':"Login failed!",'form':login_Form})
         else:
             return render(request,'login.html',context={'message':"Login failed!"})
 class signup(View):
