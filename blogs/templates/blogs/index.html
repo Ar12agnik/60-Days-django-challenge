@@ -1,0 +1,15 @@
+{% extends "blogs/base.html" %}
+{% block title %}
+    Home
+{% endblock title %}
+{% block content %}
+    {% for blog in blogs %}
+    <br>{{blog.user}}
+    {% if blog.picture %}
+    <img src="{{blog.picture.url}}" alt="image" >
+    {% endif %}
+    {{blog.caption}}<br>
+    {{blog.likes}}
+    
+    {% endfor %}
+{% endblock %}
