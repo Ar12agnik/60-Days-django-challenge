@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-wahyr=ewag$#g%8i!k^)6yhyrt((%hsqif)po1h@hx)@j&%xz1
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
+AUTH_USER_MODEL='accounts.customUser'
 
 # Application definition
 
@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'accounts',
+    'newsfeed',
 ]
 
 MIDDLEWARE = [
