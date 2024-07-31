@@ -1,27 +1,26 @@
-from django.forms import forms
+from django import forms
 from django.forms import ModelForm
 from .models import Blog,Comment
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
-CRISPY_TEMPLATE_PACK = 'bootstrap4'
-class BlogForm(ModelForm):
+class BlogForm(forms.ModelForm):
     class Meta:
         model=Blog
-        fields=['caption','picture','User']
+        fields=['caption','picture','user']
         wigits={
-            'User':forms.HiddenInput()
+            'user':forms.HiddenInput()
         }
     def __init__(self,*args, **kwargs):
         super(BlogForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper(self) 
         self.helper.add_input(Submit('submit', 'Submit'))
-class CommentForm(ModelForm):
+class CommentForm(forms.ModelForm):
     class Meta:
         model=Comment
-        fields=['comment','blog','User']
+        fields=['comment','post','user']
         wigits={
-            'User':forms.HiddenInput(),
-            'blog':forms.HiddenInput()
+            'user':forms.HiddenInput(),
+            'post':forms.HiddenInput()
         }
     def __init__(self,*args, **kwargs):
         super(CommentForm, self).__init__(*args, **kwargs)
