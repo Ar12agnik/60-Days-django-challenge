@@ -5,7 +5,7 @@ from .models import *
 admin.site.register(Comment)
 @admin.register(Blog)
 class BlogAdmin(admin.ModelAdmin):
-    list_display = ('user', 'caption', 'likes', 'deleted')
+    list_display = ('user', 'title', 'likes', 'deleted')
     search_fields = ('caption', 'user__username')
 
     def get_queryset(self, request):

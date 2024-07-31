@@ -6,8 +6,8 @@ from crispy_forms.layout import Submit
 class BlogForm(forms.ModelForm):
     class Meta:
         model=Blog
-        fields=['caption','picture','user']
-        wigits={
+        fields=['title','caption','picture','user']
+        widgets={
             'user':forms.HiddenInput()
         }
     def __init__(self,*args, **kwargs):
@@ -18,11 +18,11 @@ class CommentForm(forms.ModelForm):
     class Meta:
         model=Comment
         fields=['comment','post','user']
-        wigits={
+        widgets={
             'user':forms.HiddenInput(),
             'post':forms.HiddenInput()
         }
-    def __init__(self,*args, **kwargs):
+    def __init__(self, *args, **kwargs):
         super(CommentForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper(self) 
         self.helper.add_input(Submit('submit', 'Submit'))

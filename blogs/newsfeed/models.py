@@ -7,12 +7,14 @@ class BlogManager(models.Manager):
         return super().get_queryset().filter(deleted=False)
 
 class Blog(models.Model):
+    title = models.CharField(max_length=100,default='UNTITLED')
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     picture = models.ImageField(upload_to='images/', null=True, blank=True)
-    caption = models.CharField(max_length=1000)
+    caption = models.TextField()
     likes = models.IntegerField(default=0)
     shared_post = models.ForeignKey('self', on_delete=models.SET_NULL, null=True, blank=True)
     deleted = models.BooleanField(default=False)
+    created=models.DateTimeField(auto_now_add=True,null=True)
     objects = BlogManager()
     admin_objects=models.Manager()
 
@@ -29,5 +31,6 @@ class Comment(models.Model):
     deleted = models.BooleanField(default=False)
     objects = CommentManager()
     admin_objects=models.Manager()
+    created_at=models.DateTimeField(auto_now_add=True)
     def __str__(self):
         return f'{self.user.username}: {self.comment[:20]}...'
