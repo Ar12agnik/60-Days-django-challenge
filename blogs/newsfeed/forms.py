@@ -13,7 +13,7 @@ class BlogForm(forms.ModelForm):
     def __init__(self,*args, **kwargs):
         super(BlogForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper(self) 
-        self.helper.add_input(Submit('submit', 'Submit'))
+        self.helper.add_input(Submit('submit', 'POST'))
 class CommentForm(forms.ModelForm):
     class Meta:
         model=Comment

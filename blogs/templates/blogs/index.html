@@ -3,9 +3,21 @@
 {% block title %}
     Home
 {% endblock title %}
+{% block login %}
+{% if auth %}
+
+        <a class="btn btn-success" href="#">Profile</a>
+        <a class="btn btn-danger" href="#">LogOut</a>
+{% else %}
+{{ block.super }}
+{% endif %}
+    {% endblock login %}
 
 {% block content %}
 {% load newsfeed_extras %}
+{% if auth %}
+{% show_blog_form user %}
+{% endif %}
     
         <div class="col-lg-12">
             {% for blog in blogs %}

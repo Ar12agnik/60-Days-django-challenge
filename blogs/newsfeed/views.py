@@ -7,16 +7,25 @@ from .forms import BlogForm,CommentForm
 
 # Create your views here.
 def index(request):
-    blogs = Blog.objects.all()
-    user=request.user
-    return render(request,'blogs/index.html',{'blogs':blogs,'user':user})
+    auth = request.user.is_authenticated
+    user = request.user if auth else None
+    
+    blogs = Blog.objects.all().order_by('-id', 'likes')
+    
+    context = {
+        'blogs': blogs,
+        'user': user,
+        'auth': auth
+    }
+    
+    return render(request, 'blogs/index.html', context)
 class create_blog(LoginRequiredMixin,View):
     def get(self,request):
         blog_form=BlogForm()
         return render(request,'blogs/create_blog.html',{'blog_form':blog_form})
     def post(self,request):
         blog_form=BlogForm(request.POST)
-        if blog_form.isvalid():
+        if blog_form.is_valid():
             blog_form.save()
             return redirect('index')
         else:
