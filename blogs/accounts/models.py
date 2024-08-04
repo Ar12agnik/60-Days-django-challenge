@@ -7,8 +7,7 @@ class CustomUser(AbstractUser):
     user_bio = models.TextField(max_length=50)
     user_profile_image = models.ImageField(upload_to='profile_image', blank=True)
 
-    USERNAME_FIELD = 'phone_number'
-    REQUIRED_FIELDS = ['email','username']
+
 
     objects = UserManager()
 

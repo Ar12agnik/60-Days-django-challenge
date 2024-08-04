@@ -46,6 +46,9 @@ class comment_view(LoginRequiredMixin,View):
         else:
             return render(request,'blogs/comment.html',{'comment_form':comment_form,'blog':blog})
 def read_article(request,blog_id):
+    auth = request.user.is_authenticated
+    user = request.user if auth else None
+    
     try:
         blog=Blog.objects.get(id=blog_id)
     except Blog.DoesNotExist:
@@ -60,9 +63,13 @@ def read_article(request,blog_id):
             comment.save()
             return redirect('read_article',blog_id)
         else:
-            return render(request,'blogs/read_article.html',{'blog':blog,'comments':comment,'comment_form':comment_form})
+            return render(request,'blogs/read_article.html',{'blog':blog,'comments':comment,'comment_form':comment_form,'auth':auth})
     else:
         comment_form=CommentForm(initial={'post':blog,'user':request.user})
-        return render(request,'blogs/read_article.html',{'blog':blog,'comments':comment,'comment_form':comment_form})
-        
-
+        return render(request,'blogs/read_article.html',{'blog':blog,'comments':comment,'comment_form':comment_form,'auth':auth})
+class LoginView(View):
+    def get(self, request):
+        if request.user.is_authenticated:
+            return redirect('index')
+        else:
+            return render(request, 'blogs/login.html')
