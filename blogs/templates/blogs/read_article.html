@@ -29,10 +29,17 @@
             </div>
 
             <h2 class="mt-4">Comments</h2>
+            {% if user.is_authenticated  %}
             <form method='POST'>
                 {% csrf_token %}
                 {% crispy comment_form %}
             </form>
+            {% else %}
+            <div class="alert alert-danger" role="alert">
+
+                 <a href="#" class="alert-link">Login</a> to comment on this article.
+              </div>
+            {% endif %}
             {% for comment in comments %}
                 <div class="card mt-4">
                     <div class="card-header">
