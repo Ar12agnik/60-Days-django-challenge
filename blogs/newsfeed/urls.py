@@ -7,5 +7,6 @@ urlpatterns = [
     path('read_article/<int:blog_id>',views.read_article,name='read_article'),
     path('create',views.create_blog.as_view(),name='create_blog'),
     path('login',views.LoginView.as_view(),name='login'),
-    path('login',views.LoginView.as_view(),name='register'),
+    path('logout',views.logout_view,name='logout'),
+    path('accounts/',include('allauth.urls'))
 ]

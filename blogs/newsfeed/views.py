@@ -4,6 +4,7 @@ from .models import Blog,Comment
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import View
 from .forms import BlogForm,CommentForm
+from django.contrib.auth import logout
 
 # Create your views here.
 def index(request):
@@ -73,3 +74,7 @@ class LoginView(View):
             return redirect('index')
         else:
             return render(request, 'blogs/login.html')
+def logout_view(request):
+    if request.user.is_authenticated:
+        logout(request)
+    return redirect('index')

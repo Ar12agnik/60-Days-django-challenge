@@ -7,7 +7,7 @@
 {% if auth %}
 
         <a class="btn btn-success" href="#">Profile</a>
-        <a class="btn btn-danger" href="#">LogOut</a>
+        <a class="btn btn-danger" href='{% url "logout" %}'>LogOut</a>
 {% else %}
 {{ block.super }}
 {% endif %}

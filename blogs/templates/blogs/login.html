@@ -1,10 +1,11 @@
 {% extends "blogs/base.html" %}
 {% block content %}
+{% load socialaccount %}
 <div class="d-flex justify-content-center align-items-center" style="min-height: 100vh;">
     <form>
         <!-- Email input -->
         <div data-mdb-input-init class="form-outline mb-4">
-            <input type="email" id="form2Example1" class="form-control" />
+            <input type="username" id="form2Example1" class="form-control" />
             <label class="form-label" for="form2Example1">Email address</label>
         </div>
 
@@ -41,9 +42,9 @@
                 <i class="fab fa-facebook-f"></i>
             </button>
 
-            <button  data-mdb-ripple-init type="button" class="btn btn-secondary btn-floating mx-1">
+            <a href='{% provider_login_url "google" %}?next=/'><button  data-mdb-ripple-init type="button" class="btn btn-secondary btn-floating mx-1">
                 <i class="fab fa-google"></i>
-            </button>
+            </button></a>
 
             <button  data-mdb-ripple-init type="button" class="btn btn-secondary btn-floating mx-1">
                 <i class="fab fa-twitter"></i>
