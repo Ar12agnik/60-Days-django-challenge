@@ -25,7 +25,7 @@ class create_blog(LoginRequiredMixin,View):
         blog_form=BlogForm()
         return render(request,'blogs/create_blog.html',{'blog_form':blog_form})
     def post(self,request):
-        blog_form=BlogForm(request.POST)
+        blog_form=BlogForm(request.POST,request.FILES)
         if blog_form.is_valid():
             blog_form.save()
             return redirect('index')

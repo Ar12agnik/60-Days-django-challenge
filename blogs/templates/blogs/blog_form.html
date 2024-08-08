@@ -1,5 +1,5 @@
 {% load crispy_forms_tags %}
-<form method='POST' action='{% url "create_blog" %}'>
+<form method='POST' action='{% url "create_blog" %}' enctype="multipart/form-data">
     {% csrf_token %}
     {% crispy form %}
 </form>
