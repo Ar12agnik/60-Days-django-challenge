@@ -5,11 +5,24 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import View
 from .forms import BlogForm,CommentForm
 from django.contrib.auth import logout
+from accounts.forms import update_user
 
 # Create your views here.
 def index(request):
     auth = request.user.is_authenticated
     user = request.user if auth else None
+    if request.method=='GET':
+        if user.user_bio is None:
+            form=update_user()
+            return render(request,'accounts/update_user.html',{'form':form})
+    if request.method=='POST':
+        print("post")
+        form=update_user(request.POST,request.FILES,instance=request.user)
+        if form.is_valid():
+            form.save()
+            return redirect('index')
+        else:
+            return render(request,'accounts/update_user.html',{'form':form})
     
     blogs = Blog.objects.all().order_by('-id', 'likes')
     
