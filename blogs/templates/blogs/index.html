@@ -6,7 +6,7 @@
 {% block login %}
 {% if auth %}
 
-        <a class="btn btn-success" href="#">Profile</a>
+        <a class="btn btn-success" href="{% url 'profile' %}">Profile</a>
         <a class="btn btn-danger" href='{% url "logout" %}'>LogOut</a>
 {% else %}
 {{ block.super }}
@@ -25,7 +25,8 @@
                     <div class="card-header">
                         <div class="d-flex align-items-center justify-content-center">
                             <img src="{{ blog.user.user_profile_image.url }}" alt="Profile Picture" class="mr-2 rounded-circle" style="width: 32px; height: 32px;">
-                            <span>{{ blog.user }}</span>
+                            <span><a href="{% url 'view_profile' blog.user.username %}">{{ blog.user }}</a>
+                            </span>
                         </div>
                     </div>
                     <div class="card-body">

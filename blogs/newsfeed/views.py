@@ -12,9 +12,11 @@ def index(request):
     auth = request.user.is_authenticated
     user = request.user if auth else None
     if request.method=='GET':
-        if user.user_bio is None:
-            form=update_user()
-            return render(request,'accounts/update_user.html',{'form':form})
+        if user:
+            print(type(user.user_bio))
+            if user.user_bio is None or user.user_bio=='':
+                form=update_user()
+                return render(request,'accounts/update_user.html',{'form':form})
     if request.method=='POST':
         print("post")
         form=update_user(request.POST,request.FILES,instance=request.user)
