@@ -47,4 +47,14 @@ class transactions(APIView):
                 serealizer.save()
                 return Response({'message':'transaction updated',
                                  'data':serealizer.data})
-        
+    def delete(self,request):
+        data=request.data
+        id=data.get('id',None)
+        if not id:
+            return Response({'error':'id is required'})
+        else:  
+            quearyset=Transactions.objects.filter(id=id)
+            if not quearyset:
+                return Response({'error':'no transaction found'})
+            quearyset.delete()
+            return Response({'message':'transaction deleted'})
