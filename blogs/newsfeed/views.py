@@ -6,6 +6,8 @@ from django.views.generic import View
 from .forms import BlogForm,CommentForm
 from django.contrib.auth import logout
 from accounts.forms import update_user
+from django.contrib.auth import authenticate,login
+from django.contrib.auth import get_user_model
 
 # Create your views here.
 def index(request):
@@ -26,7 +28,7 @@ def index(request):
         else:
             return render(request,'accounts/update_user.html',{'form':form})
     
-    blogs = Blog.objects.all().order_by('-id', 'likes')
+    blogs = Blog.objects.all().order_by('-id')
     
     context = {
         'blogs': blogs,
@@ -35,6 +37,16 @@ def index(request):
     }
     
     return render(request, 'blogs/index.html', context)
+def update_users(request):
+    if request.method=='GET':
+        form=update_user()
+        return render(request,'accounts/update_user.html',{'form':form})
+    if request.method=='POST':
+        print("post")
+        form=update_user(request.POST,request.FILES,instance=request.user)
+        if form.is_valid():
+            form.save()
+            return redirect('index')
 class create_blog(LoginRequiredMixin,View):
     def get(self,request):
         blog_form=BlogForm()
@@ -89,6 +101,36 @@ class LoginView(View):
             return redirect('index')
         else:
             return render(request, 'blogs/login.html')
+    def post(self,request):
+        print('POST')
+        email=request.POST['email']
+        password=request.POST['password']
+        user=authenticate(request,username=email,password=password)
+        if user is not None:
+            login(request,user)
+            return redirect('index')
+        else:
+            return redirect('login')
+class Register(View):
+    def get(self,request,msg=None):
+        return render(request,'blogs/register.html',{'msg':msg})
+    def post(self,request):
+        full_name=request.POST['full_name']
+        phone=request.POST['phone']
+        full_name=full_name.split(' ')
+        first_name=full_name[0]
+        last_name=full_name[1]
+        username=request.POST['username']
+        password=request.POST['password']
+        confirm_password=request.POST['confirm_password']
+        user=get_user_model()
+        if user.objects.filter(username=username).exists():
+            return redirect('register','Username already exists')
+        elif password!=confirm_password:
+            return redirect('register','Passwords do not match')
+        else:
+            user.objects.create_user(username=username,password=password,first_name=first_name,last_name=last_name,phone_number=phone)
+            return redirect('login')
 def logout_view(request):
     if request.user.is_authenticated:
         logout(request)

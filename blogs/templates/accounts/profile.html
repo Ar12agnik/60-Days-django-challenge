@@ -14,7 +14,13 @@
                 <div class="profile-header">
                     <img src="{{ user.user_profile_image.url }}" alt="Profile Image" class="profile-image" width="116" height="157">
                     <div class="profile-info">
-                        <h2 class="profile-username">{{ user.username }}</h2>
+                        <div class="d-flex align-items-center justify-content-between">
+                            <h2 class="profile-username">{{ user.username }}</h2>
+                            {% if update %}
+                            <a href="{% url 'update_user' %}" class="btn btn-primary">Update User</a>
+                            {% endif %}
+                            
+                        </div>
                         <p class="profile-bio">{{ user.user_bio }}</p>
                     </div>
                 </div>
@@ -45,7 +51,6 @@
                                 </div>
                             {% endfor %}
                         </div>
-                        <!-- Add more profile information here -->
                     </div>
                 </div>
             </div>
